@@ -20,6 +20,29 @@ export const calcLossMultiplier: (oldPrice: BigNumber, newPrice: BigNumber) => B
         : ratio;
 };
 
+/**
+ * Calculates the effective returns due to the skew of the pools for the long side
+ * @param longBalance quote balance of the long pool in USD
+ * @param shortBalance quote balance of the short pool in USD
+ * @param leverage pool leverage
+ * @returns the effective returns to the short pool on the next rebalance
+ */
+export const calcEffectiveLongGain: (shortBalance: BigNumber, longBalance: BigNumber, leverage: BigNumber) => BigNumber = (shortBalance, longBalance, leverage) => (
+    (new BigNumber(1).div(calcSkew(shortBalance, longBalance))).times(leverage)
+)
+
+
+/**
+ * Calculates the effective returns due to the skew of the pools for the short side
+ * @param longBalance quote balance of the long pool in USD
+ * @param shortBalance quote balance of the short pool in USD
+ * @param leverage pool leverage
+ * @returns the effective returns to the short pool on the next rebalance
+ */
+export const calcEffectiveShortGain: (shortBalance: BigNumber, longBalance: BigNumber, leverage: BigNumber) => BigNumber = (shortBalance, longBalance, leverage) => (
+    calcSkew(shortBalance, longBalance).times(leverage)
+)
+
 // hourly -> 24 * 365
 const COMPOUND_FREQUENCY = 8760;
 
