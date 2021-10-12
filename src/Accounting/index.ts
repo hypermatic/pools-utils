@@ -51,9 +51,12 @@ const COMPOUND_FREQUENCY = 8760;
  * @param apr annual percentage rate
  * @returns annual percentage yield
  */
-export const calcAPY: (apr: BigNumber) => BigNumber = (apr) =>
-    apr.div(COMPOUND_FREQUENCY).plus(1).pow(COMPOUND_FREQUENCY).minus(1);
-
+export const calcAPY: (apr: BigNumber) => BigNumber = (apr) => {
+    BigNumber.config({ POW_PRECISION: 10 })
+    const apy =  apr.div(COMPOUND_FREQUENCY).plus(1).pow(COMPOUND_FREQUENCY).minus(1);
+    BigNumber.config({ POW_PRECISION: 0 })
+    return apy;
+}
 /**
  *
  * Calculate the leveraged losing pool multiplier
@@ -227,13 +230,13 @@ export const calcNextValueTransfer: (
  * @returns 0 if no tokens are given, if the tokens have no USDC value or if the stakingToken supply is 0
  * 	otherwise returns the price of the LP token.
  */
-export const calcBptTokenPrice: (args: {
+export const calcBptTokenPrice: (
+    stakingTokenSupply: BigNumber,
 	tokens?: {
 		reserves: BigNumber;
 		usdcPrice: BigNumber;
 	}[]
-    stakingTokenSupply: BigNumber,
-}) => BigNumber = ({ tokens, stakingTokenSupply }) => {
+) => BigNumber = (stakingTokenSupply, tokens) => {
     if (!tokens) {
         return new BigNumber(0);
     }
@@ -251,3 +254,16 @@ export const calcBptTokenPrice: (args: {
 
     return balancerPoolUSDCValue.div(stakingTokenSupply);
 };
+
+export const calcBptTokenSpotPrice: (
+    sellingToken: {
+        weight: BigNumber,
+        balance: BigNumber
+    },
+    buyingToken: {
+        weight: BigNumber,
+        balance: BigNumber
+    }
+) => BigNumber = (sellingToken, buyingToken) => (
+    (sellingToken.balance.div(sellingToken.weight)).div((buyingToken.balance).div(buyingToken.weight))
+)
