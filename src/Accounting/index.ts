@@ -43,8 +43,8 @@ export const calcEffectiveShortGain: (shortBalance: BigNumber, longBalance: BigN
     calcSkew(shortBalance, longBalance).times(leverage)
 )
 
-// hourly -> 24 * 365
-const COMPOUND_FREQUENCY = 8760;
+// weekly -> 52
+const COMPOUND_FREQUENCY = 52;
 
 /**
  * Calculate the compounding gains
