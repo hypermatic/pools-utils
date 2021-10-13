@@ -1,6 +1,6 @@
 {
   "name": "@tracer-protocol/tracer-pools-utils",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Helpful utils for interacting with Tracer's Perpetual Pools",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
