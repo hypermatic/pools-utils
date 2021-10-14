@@ -33,12 +33,12 @@
     "b": "tsc",
     "test": "mocha -r ts-node/register test/*.ts"
   },
-  "repository": "git+https://github.com/tracer-protocol/tracer-pools-utils.git",
+  "repository": "git+https://github.com/tracer-protocol/pools-utils.git",
   "author": "dospore",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tracer-protocol/tracer-pools-utils/issues"
+    "url": "https://github.com/tracer-protocol/pools-utils/issues"
   },
-  "homepage": "https://github.com/tracer-protocol/tracer-pools-utils#readme",
+  "homepage": "https://github.com/tracer-protocol/pools-utils#readme",
   "private": false
 }
