@@ -263,7 +263,12 @@ export const calcBptTokenSpotPrice: (
     buyingToken: {
         weight: BigNumber,
         balance: BigNumber
-    }
-) => BigNumber = (sellingToken, buyingToken) => (
-    (sellingToken.balance.div(sellingToken.weight)).div((buyingToken.balance).div(buyingToken.weight))
-)
+    },
+    swapFee: BigNumber
+) => BigNumber = (sellingToken, buyingToken, swapFee) => {
+    const numerator = sellingToken.balance.div(sellingToken.weight);
+    const denominator = buyingToken.balance.div(buyingToken.weight);
+    const swapFeeMultiplier = new BigNumber(1).div(new BigNumber(1).minus(swapFee))
+
+    return (numerator.div(denominator)).times(swapFeeMultiplier);
+}
